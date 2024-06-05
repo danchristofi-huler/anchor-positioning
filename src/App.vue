@@ -1,30 +1,107 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="layout">
+    <aside></aside>
+    <nav>
+      <MenuItem v-for="section in menuSections" :section="section" />
+    </nav>
+    <main></main>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
+<script setup>
+import MenuItem from "./components/MenuItem.vue";
+
+const menuSections = [
+  {
+    id: 'dashboard-menu',
+    title: 'Dashboard'
+  },
+  {
+    id: 'spaces-menu',
+    title: 'Spaces'
+  },
+  {
+    id: 'tiles-menu',
+    title: 'Tiles'
+  },
+  {
+    id: 'collections-menu',
+    title: 'Collections'
+  },
+  {
+    id: 'users-menu',
+    title: 'Users'
+  },
+  {
+    id: 'audiences-menu',
+    title: 'Audiences'
+  },
+  {
+    id: 'comms-menu',
+    title: 'Comms'
+  },
+  {
+    id: 'reports-menu',
+    title: 'Reports'
+  },
+  {
+    id: 'organisations-menu',
+    title: 'Organisations'
+  },
+  {
+    id: 'settings-menu',
+    title: 'Settings'
+  },
+  {
+    id: 'more-menu',
+    title: 'More',
+    subcategories: [
+      {
+        id: 'menu-1',
+        title: 'More 1'
+      },
+      {
+        id: 'menu-2',
+        title: 'More 2'
+      },
+      {
+        id: 'menu-3',
+        title: 'More 3'
+      }
+    ]
+  }
+]
+</script>
+
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.layout {
+  display: grid;
+  width: 100%;
+  min-height: 100vh;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 100px 1fr;
+  grid-template-areas:
+    "aside nav"
+    "aside main";
+
+
+  > aside {
+    background: #8e8e8e;
+    grid-area: aside;
+  }
+
+  > nav {
+    background: #181818;
+    grid-area: nav;
+    display: flex;
+  }
+
+  > main {
+    background: #484848;
+    grid-area: main;
+  }
+
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+
+
 </style>
