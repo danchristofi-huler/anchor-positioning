@@ -4,12 +4,11 @@
        @mouseleave="closeDropdown"
        @click.prevent>
 
-    <button :popovertarget="section.id"
-            :style="`anchor-name: --${section.id}`">
+    <button :style="`anchor-name: --${section.id}`">
       {{ section.title }}
     </button>
 
-    <div :id="section.id" popover class="menu-item-dropdown" ref="menuEl">
+    <div popover class="menu-item-dropdown" ref="menuEl" :style="`position-anchor: --${props.section.id}`">
       <span>{{ section.title }}</span>
       <ul v-if="section.subcategories">
         <MenuSubItem v-for="subcategory in section.subcategories" :section="section" :subcategory="subcategory" />
@@ -37,15 +36,6 @@ const closeDropdown = () => {
   // menuEl.value.hidePopover()
 }
 
-const dropdownStyles = computed(() => {
-  return {
-    positionAnchor: `--${props.section.id}`,
-    left: `anchor(--${props.section.id} left)`,
-    right: `anchor(--${props.section.id} right)`,
-    top: `anchor(--${props.section.id} top)`,
-    bottom: `calc(10px + anchor(--${props.section.id} bottom))`
-  }
-})
 </script>
 
 <style scoped>
@@ -55,21 +45,6 @@ const dropdownStyles = computed(() => {
     height: 100%;
     padding: 0 50px;
     position: relative;
-
-    &:has(+ :popover-open) {
-      &:before {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 0;
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        border-bottom: 15px solid white;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-    }
   }
 }
 
@@ -77,14 +52,24 @@ const dropdownStyles = computed(() => {
   position: absolute;
   margin: 0;
   width: 600px;
-  left: v-bind(dropdownStyles.left);
-  top: v-bind(dropdownStyles.bottom);
-  position-try-options: --menu-right;
-  transition: all 0.25s;
+  inset-area: bottom span-right;
+  position-try-options: flip-block, flip-inline, flip-block flip-inline;
   padding: 30px;
   border-radius: 15px;
   border: none;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  transition:
+      opacity .2s ease-in,
+      display .2s ease-in;
+  transition-behavior: allow-discrete;
+
+  &:not(:popover-open) {
+    opacity: 0;
+  }
+
+  @starting-style {
+    opacity: 0;
+  }
 
   &:has(ul) {
     width: 260px;
@@ -97,10 +82,5 @@ const dropdownStyles = computed(() => {
   }
 }
 
-@position-try --menu-right {
-  left: auto;
-  right: v-bind(dropdownStyles.right);
-  top: v-bind(dropdownStyles.bottom);
-}
 
 </style>

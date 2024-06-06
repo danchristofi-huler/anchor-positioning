@@ -4,12 +4,15 @@
     <nav>
       <MenuItem v-for="section in menuSections" :section="section" />
     </nav>
-    <main></main>
+    <main>
+      <Tooltip v-for="index in 300"/>
+    </main>
   </div>
 </template>
 
 <script setup>
 import MenuItem from "./components/MenuItem.vue";
+import Tooltip from "./components/Tooltip.vue";
 
 const menuSections = [
   {
@@ -45,24 +48,16 @@ const menuSections = [
     title: 'Reports'
   },
   {
-    id: 'organisations-menu',
-    title: 'Organisations'
-  },
-  {
-    id: 'settings-menu',
-    title: 'Settings'
-  },
-  {
     id: 'more-menu',
     title: 'More',
     subcategories: [
       {
         id: 'menu-1',
-        title: 'More 1'
+        title: 'Settings'
       },
       {
         id: 'menu-2',
-        title: 'More 2'
+        title: 'Organisations'
       },
       {
         id: 'menu-3',
@@ -99,6 +94,13 @@ const menuSections = [
   > main {
     background: #484848;
     grid-area: main;
+    color: #FFF;
+    padding: 50px;
+    display: flex;
+    gap: 80px;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-content: flex-start;
   }
 
 }
